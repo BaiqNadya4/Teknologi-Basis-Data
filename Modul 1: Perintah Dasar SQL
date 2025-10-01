@@ -1,0 +1,78 @@
+IMPLEMENTASI
+--> Pembuatan Basis Data
+    create database kampus;
+
+--> Menghapus Basis Data
+    drop database kampus;
+
+--> Membuat Tabel Dalam Basis Data
+    create table mahasiswa (
+    Nim varchar(10) primary key,
+    Nama varchar(50),
+    Alamat varchar(100)
+    );
+
+--> Menghapus Tabel
+    drop table mahasiswa;
+
+--> Mengupdate Atribut Tabel
+    alter table mahasiswa add angkatan int;
+
+--> Mengisi Tabel
+    insert into mahasiswa (Nim, Nama, Alamat) values ('240306057', 'Bela Nadya Faizuz Quratulain', 'Suela');
+
+--> Mengupdate Isi Tabel
+    update mahasiswa
+    set nama = 'caca'
+    where nim = 240306049;
+
+STUDY KASUS
+--> create database kampus;
+--> show databases;
+--> use kampus;
+--> create table mahasiswa (
+    Nim varchar(10) primary key,
+    Nama varchar(50),
+    Alamat varchar(100)
+    );
+--> create table MK (
+    MKID varchar(10) primary key,
+    Nama varchar(50)
+    );
+--> create table Dosen (
+    DosenID varchar(10) primary key,
+    Nama varchar(50)
+    );
+--> create table nilai (
+    Nim varchar(10),
+    MKID varchar(10),
+    DosenID varchar(10),
+    Nilai char(2),
+    primary key (Nim, MKID, DosenID),
+    foreign key (Nim) references
+    mahasiswa (Nim),
+    foreign key (MKID) references
+    MK (MKID),
+    foreign key (DosenID) references
+    Dosen (DosenID)
+     );
+--> insert into mahasiswa (Nim, Nama, Alanat) values ('248306857', 'Baiq Nadya Fairuz Qutratuain', 'Suela');
+--> insert into MK (MKID, Nama) values ('MK01', 'Basis Data');
+--> insert into Dosen (DosenId, Nama) values ('D001', 'Ahmad Ashril Rizal');
+--> insert into nilai (Nim, KID, DosenID, Nilai) values ('240306857', 'MK01', 'D001', '95');
+--> SELECT
+    m. Nim,
+    m. Nama AS Nama_Mahasiswa,
+    mk. Nama AS Nama_Matakuliah,
+    d. Nama AS Nama_Dosen,
+    n.Nilai
+    FROM
+    nilai AS n
+    JOIN
+    mahasiswa AS m ON n.Nim = m. Nim
+    JOIN
+    MK AS mk ON n.MIKID mk.MKID
+    JOIN
+    Dosen AS d ON n. DosenID= d. DosenID;
+
+    
