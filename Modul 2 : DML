@@ -1,0 +1,90 @@
+#IMPLEMENTASI
+Membuat Basis Data Siakad
+--> create database siakad;
+Membuat Tabel Dosen
+--> create table dosen (
+    id_dosen varchar(10) primary key,
+    nama_dosen varchar(100) not null,
+    email varchar(100) unique
+    );
+Membuat Tabel Mata Kuliah
+--> create table mata_kuliah (
+    kode_matkul char(10) primary key,
+    nama_matkul varchar(50) not null,
+    sks int not null
+    );
+Membuat Tabel Distribusi Mata Kuliah
+--> create table distribusi_matkul (
+    id_dosen char(5),
+    kode_matkul char(10),
+    primary key (id_dosen, kode_matkul),
+    foreign key (id_dosen) references dosen(id_dosen),
+    foreign key (kode_matkul) references mata_kuliah(kode_matkul)
+    );
+Insert Dosen
+--> insert into dosen(id_dosen, nama_dosen, email) values
+    ('D001', 'Nuri', 'nuri@gmail.com'),
+    ('D002', 'Mina', 'mina@gmail.com'),
+    ('D003', 'Caca', 'caca@gmail.com'),
+    ('D004', 'Susan', 'susan@gmail.com'),
+    ('D005', 'Lian', 'lian@gmail.com'),
+    ('D006', 'Oby', 'oby@gmail.com'),
+    ('D007', 'Aje', 'aje@gmail.com'),
+    ('D008', 'Farel', 'farel@gmail.com'),
+    ('D009', 'Irul', 'irul@gmail.com');
+Insert Mata Kuliah
+--> insert into mata_kuliah(kode_matkul, nama_matkul, sks) values
+    ('Mk001', 'Teknologi Basis Data', 3),
+    ('MK002', 'Pemrograman Web', 3),
+    ('MK003', 'Analisis Numerik', 3),
+    ('MK004', 'Bahasa Inggris', 2),
+    ('Mk005', 'Ilmu Komunikasi', 2),
+    ('MK006', 'Jaringan Komputer', 3),
+    ('MK007', 'Komunikasi Data', 2),
+    ('MK008', 'Tata TI', 2),
+    ('MK009', 'Tauhid', 2);
+Insert Distribusi Mata kuliah
+--> insert into distribusi_matkul(id_dosen, kode_matkul) values
+    ('D001', 'MK001'),
+    ('D002', 'MK002'),
+    ('D003', 'MK003');
+Menampilkan dosen yang mendapatkan penugasan mengampu mata kuliah
+--> select
+    d.id_dosen,
+    d.nama_dosen
+    from
+    dosen d
+    inner join
+    distribusi_matkul dm on d.id_dosen = dm.id_dosen
+    group by
+    d.id_dosen, d.nama_dosen;
+Menampilkan semua dosen dan status mata kuliah
+--> select
+    d.id_dosen,
+    d.nama_dosen,
+    mk.nama_matkul
+    from
+    dosen d
+    left join
+    distribusi_matkul dm on d.id_dosen = dm.id_dosen
+    left join
+    mata_kuliah mk on dm.kode_matkul = mk.kode_matkul
+    order by
+    d.id_dosen;
+Menampilkan semua mata kuliah dengan status dosen yang mengampu
+--> select
+    mk.kode_matkul,
+    mk.nama_matkul,
+    d.nama_dosen
+    from
+    dosen d
+    right join
+    distribusi_matkul dm on d.id_dosen = dm.id_dosen
+    right join
+    mata_kuliah mk on dm.kode_matkul = mk.kode_matkul
+    order by
+    mk.kode_matkul;
+
+
+
+
